@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Shoes Store</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="../img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/templatemo.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
+    <!-- Thêm vào <head> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+    <!--
+
+    TemplateMo 559 Shoes Shop
+
+    https://templatemo.com/tm-559-Shoes-shop
+<style>
+    .star {
+        font-size: 1.5rem;
+        color: gray;
+        cursor: pointer;
+    }
+
+    .star.selected {
+        color: gold;
+    }
+</style>
+
+    -->
+    <style>
+        .star {
+            font-size: 1.5rem;
+            color: gray;
+            cursor: pointer;
+        }
+
+        .star.selected {
+            color: gold;
+        }
+    </style>
+
+</head>
+
+<body>
+<!-- Start Top Nav -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+    <div class="container text-light">
+        <div class="w-100 d-flex justify-content-between">
+            <div>
+                <i class="fa fa-envelope mx-2"></i>
+                <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                <i class="fa fa-phone mx-2"></i>
+                <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+            </div>
+            <div>
+                <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i
+                        class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                <a class="text-light" href="https://www.instagram.com/" target="_blank"><i
+                        class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                <a class="text-light" href="https://twitter.com/" target="_blank"><i
+                        class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i
+                        class="fab fa-linkedin fa-sm fa-fw"></i></a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Close Top Nav -->
+
+
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-light shadow">
+    <div class="container d-flex justify-content-between align-items-center">
+
+        <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+            Shoes
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
+             id="templatemo_main_nav">
+            <div class="flex-fill">
+                <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/home}">Trang chủ </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/about}">Về chúng tôi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/shop}">Sản phẩm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/contact}">Liên hệ</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar align-self-center d-flex">
+                <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                        <div class="input-group-text">
+                            <i class="fa fa-fw fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+                <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
+                   data-bs-target="#templatemo_search">
+                    <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                </a>
+
+                <div th:if="${user != null}">
+                    <a class="nav-icon position-relative text-decoration-none" th:href="@{/cart}">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"
+                              th:text="${cartItemQuantity}"></span>
+                    </a>
+
+                    <a class="nav-icon position-relative text-decoration-none" href="#" id="dropdownMenuButton"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" th:href="@{/update-use}">Thông tin cá nhân</a>
+                        <a class="dropdown-item" th:href="@{/order}">Thông tin đơn hàng</a> <a class="dropdown-item"
+                                                                                               th:href="@{/logout}">Đăng
+                        xuất</a>
+                    </div>
+                </div>
+
+                <div th:unless="${user != null}">
+                    <a href="/login">Đăng nhập</a>|
+                    <a href="/register">Đăng ký</a>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</nav>
+<!-- Close Header -->
+<!-- Modal -->
+<div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="w-100 pt-1 mb-5 text-right">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="" method="get" class="modal-content modal-body border-0 p-0">
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                <button type="submit" class="input-group-text bg-success text-light">
+                    <i class="fa fa-fw fa-search text-white"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Open Content -->
+<section class="bg-light">
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-lg-5 mt-5">
+                <div class="card mb-3">
+                    <img class="card-img img-fluid" th:src="@{'/assets/img/products/' + ${product.imageUrl}}"
+                         alt="Card image cap" id="product-detail">
+                </div>
+                <div class="row">
+
+
+                    <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item">
+                        <div class="carousel-inner product-links-wap" role="listbox">
+
+                            <div class="row">
+
+                            </div>
+
+                            <div class="carousel-item">
+                                <div class="row">
+
+                                </div>
+                            </div>
+
+                            <div class="carousel-item">
+                                <div class="row">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-7 mt-5">
+                <div class="card">
+                    <div class="card-body">cart
+                        <h1 class="h2" th:text="${product.name}"></h1>
+                        <p class="h3 py-2" th:text="${product.price} + ' VND'"></p>
+                        <p class="py-2">
+                            <span th:each="i : ${#numbers.sequence(1,5)}">
+                                <i th:class="(
+                                     ${averageRating == null || averageRating >= i} ? 'fa-solid fa-star text-warning' :
+                                      (${averageRating >= i - 0.5} ? 'fa-solid fa-star-half-stroke text-warning' : 'fa-regular fa-star')
+                                    )">
+                                </i>
+                            </span>
+                            <span class="list-inline-item text-dark"
+                                  th:text="'Rating ' + (${averageRating != null} ? ${averageRating} : 5.0)">
+</span>
+                        </p>
+
+
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>Brand:</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-muted"><strong th:text="${product.brand}"></strong></p>
+                            </li>
+                        </ul>
+
+                        <h6>Mô tả</h6>
+                        <p th:text=" ${product.description}"></p>
+
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>Số lượng còn :</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-muted"><strong id="stockQuantity"
+                                                              th:text="${product.stockQuantity}"></strong></p>
+                            </li>
+                        </ul>
+
+                        <h6>Đặc trưng:</h6>
+                        <ul class="list-unstyled pb-3">
+                            <p th:text=" ${product.features}"></p>
+
+                        </ul>
+
+                        <form action="" method="GET">
+                            <input type="hidden" name="product-title" value="Activewear">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <ul class="list-inline pb-3">
+                                        <li class="list-inline-item">Size :
+                                        </li>
+                                        <li class="list-inline-item"><span class="btn btn-success btn-size"
+                                                                           data-size="38">38</span></li>
+                                        <li class="list-inline-item"><span class="btn btn-success btn-size"
+                                                                           data-size="39">39</span></li>
+                                        <li class="list-inline-item"><span class="btn btn-success btn-size"
+                                                                           data-size="40">40</span></li>
+                                        <li class="list-inline-item"><span class="btn btn-success btn-size"
+                                                                           data-size="41">41</span></li>
+                                        <li class="list-inline-item"><span class="btn btn-success btn-size"
+                                                                           data-size="42">42</span></li>
+                                        <li class="list-inline-item"><span class="btn btn-success btn-size"
+                                                                           data-size="43">43</span></li>
+                                    </ul>
+                                </div>
+                                <!-- Chọn Số lượng -->
+                                <div class="col-auto">
+                                    <ul class="list-inline pb-3">
+                                        <li class="list-inline-item text-right">
+                                            Số lượng
+                                            <input type="hidden" name="product-quanity" id="quantity" value="1">
+                                            <input type="hidden" name="product-productId" id="productId"
+                                                   th:value="${product.id}">
+                                        </li>
+                                        <li class="list-inline-item"><span class="btn btn-success" id="minus">-</span>
+                                        </li>
+                                        <li class="list-inline-item"><span class="badge bg-secondary"
+                                                                           id="var-value">1</span></li>
+                                        <li class="list-inline-item"><span class="btn btn-success" id="plus">+</span>
+                                        </li>
+                                    </ul>
+                                    <div id="stock-limit-message" class="text-danger" style="display:none;">
+                                        Đã đạt giới hạn số lượng còn.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pb-3">
+
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-success btn-lg" id="addToCartButton">Thêm vào
+                                        giỏ hàng
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Close Content -->
+<section>
+    <div class="container pb-5" style="padding-bottom: 20px">
+        <div class="row">
+            <div class="mt-5">
+                <h4>Đánh giá sản phẩm</h4>
+                <form th:if="${userReview == null}" th:action="@{/admin/products/reviews/add-review}" method="post">
+                    <input type="hidden" name="productId" th:value="${product.id}"/>
+                    <div class="mb-3">
+                        <label for="rating">Đánh giá sao:</label>
+                        <div id="star-rating">
+                            <i class="fa fa-star star" data-value="1"></i>
+                            <i class="fa fa-star star" data-value="2"></i>
+                            <i class="fa fa-star star" data-value="3"></i>
+                            <i class="fa fa-star star" data-value="4"></i>
+                            <i class="fa fa-star star" data-value="5"></i>
+                        </div>
+                        <input type="hidden" name="rating" id="rating" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="comment">Nhận xét:</label>
+                        <textarea class="form-control" name="comment" id="comment" rows="3" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                </form>
+
+                <div th:if="${userReview != null}" class="mt-3">
+                    <h6>Bạn đã đánh giá sản phẩm này</h6>
+                    <p>⭐ <span th:text="${userReview.rating}"></span> sao</p>
+                    <p><strong>Nhận xét:</strong> <span th:text="${userReview.comment}"></span></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Start Article -->
+<!-- -->
+<!-- End Article -->
+
+
+<!-- Start Footer -->
+<footer class="bg-dark" id="tempaltemo_footer">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 pt-5">
+                <h2 class="h2 text-success border-bottom pb-3 border-light logo">Shoes Shop</h2>
+                <ul class="list-unstyled text-light footer-link-list">
+                    <li>
+                        <i class="fas fa-map-marker-alt fa-fw"></i>
+                        123 Consectetur at ligula 10660
+                    </li>
+                    <li>
+                        <i class="fa fa-phone fa-fw"></i>
+                        <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-envelope fa-fw"></i>
+                        <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 pt-5">
+                <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
+                <ul class="list-unstyled text-light footer-link-list">
+                    <li><a class="text-decoration-none" href="#">Luxury</a></li>
+                    <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
+                    <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
+                    <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
+                    <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
+                    <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
+                    <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 pt-5">
+                <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+                <ul class="list-unstyled text-light footer-link-list">
+                    <li><a class="text-decoration-none" href="#">Home</a></li>
+                    <li><a class="text-decoration-none" href="#">About Us</a></li>
+                    <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
+                    <li><a class="text-decoration-none" href="#">FAQs</a></li>
+                    <li><a class="text-decoration-none" href="#">Contact</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="row text-light mb-4">
+            <div class="col-12 mb-3">
+                <div class="w-100 my-3 border-top border-light"></div>
+            </div>
+            <div class="col-auto me-auto">
+                <ul class="list-inline text-left footer-icons">
+                    <li class="list-inline-item border border-light rounded-circle text-center">
+                        <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
+                                class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                    </li>
+                    <li class="list-inline-item border border-light rounded-circle text-center">
+                        <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i
+                                class="fab fa-instagram fa-lg fa-fw"></i></a>
+                    </li>
+                    <li class="list-inline-item border border-light rounded-circle text-center">
+                        <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
+                                class="fab fa-twitter fa-lg fa-fw"></i></a>
+                    </li>
+                    <li class="list-inline-item border border-light rounded-circle text-center">
+                        <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i
+                                class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-auto">
+                <label class="sr-only" for="subscribeEmail">Email address</label>
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
+                           placeholder="Email address">
+                    <div class="input-group-text btn-success text-light">Subscribe</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-100 bg-black py-3">
+        <div class="container">
+            <div class="row pt-2">
+                <div class="col-12">
+                    <p class="text-left text-light">
+                        Copyright &copy; 2021 Company Name
+                        | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+<!-- End Footer -->
+
+<!-- Start Script -->
+<script src="../js/jquery-1.11.0.min.js"></script>
+<script src="../js/jquery-migrate-1.2.1.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/templatemo.js"></script>
+<script src="../js/custom.js"></script>
+<!-- End Script -->
+
+<!-- Start Slider Script -->
+<script src="../js/slick.min.js"></script>
+<script>
+    document.querySelectorAll(".star").forEach(star => {
+        star.addEventListener("click", function () {
+            const rating = this.getAttribute("data-value");
+            document.getElementById("rating").value = rating;
+
+            document.querySelectorAll(".star").forEach(s => s.classList.remove("text-warning"));
+            for (let i = 0; i < rating; i++) {
+                document.querySelectorAll(".star")[i].classList.add("text-warning");
+            }
+        });
+    });
+</script>
+
+<script>
+    const stockQuantity = parseInt(document.getElementById('stockQuantity').textContent);
+    const quantityInput = document.getElementById('quantity');
+    const varValue = document.getElementById('var-value');
+    const stockLimitMessage = document.getElementById('stock-limit-message');
+    const btnMinus = document.getElementById("minus");
+    const btnPlus = document.getElementById("plus");
+
+    btnPlus.addEventListener('click', function () {
+        let currentQuantity = parseInt(varValue.textContent);
+
+        if (currentQuantity < stockQuantity) {
+            currentQuantity++;
+            varValue.textContent = currentQuantity;
+            quantityInput.value = currentQuantity;
+            stockLimitMessage.style.display = 'none';
+            btnPlus.disabled = false;
+        }
+
+        if (currentQuantity === stockQuantity) {
+            stockLimitMessage.style.display = 'block';
+            btnPlus.disabled = true;
+        }
+    });
+
+    btnMinus.addEventListener('click', function () {
+        let currentQuantity = parseInt(varValue.textContent);
+
+        if (currentQuantity > 1) {
+            currentQuantity--;
+            varValue.textContent = currentQuantity;
+            quantityInput.value = currentQuantity;
+            stockLimitMessage.style.display = 'none';
+            btnPlus.disabled = false;
+        }
+    });
+
+    let sizeRaw = null;
+    document.querySelectorAll(".btn-size").forEach(function (button) {
+        button.addEventListener("click", function () {
+            const selectedSize = this.getAttribute("data-size");
+            sizeRaw = selectedSize;
+            console.log("size: " + sizeRaw);
+        });
+    });
+
+</script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let isLoggedIn = /*[[${user != null}]]*/ false;
+    /*]]>*/
+
+
+    document.getElementById("addToCartButton").addEventListener("click", function () {
+        if (!isLoggedIn) {
+            alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.");
+            window.location.href = "/login";
+            return;
+        }
+
+        const productId = parseInt(document.getElementById("productId").value, 10);
+        const quantity = parseInt(document.getElementById("quantity").value);
+        const size = sizeRaw;
+        console.log("productId: " + productId);
+        console.log("quantity: " + quantity);
+        console.log("size: " + size);
+
+        if (!size) {
+            alert("Vui lòng chọn size trước khi thêm vào giỏ hàng!");
+            return;
+        }
+
+        const cartItem = {
+            productId: productId,
+            quantity: quantity,
+            size: size
+        };
+
+        fetch('/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cartItem)
+        })
+            .then(response => response.text())
+            .then(data => {
+                window.location.href = "/cart";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Đã xảy ra lỗi khi thêm vào giỏ hàng!');
+            });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('rating');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                const rating = this.getAttribute('data-value');
+                ratingInput.value = rating;
+
+                stars.forEach(s => {
+                    s.classList.remove('selected');
+                    if (s.getAttribute('data-value') <= rating) {
+                        s.classList.add('selected');
+                    }
+                });
+
+                console.log("Rating:", rating);
+            });
+        });
+    });
+</script>
+
+
+</body>
+
+</html>

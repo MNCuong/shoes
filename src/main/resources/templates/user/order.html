@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Shoes Store</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="../img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/templatemo.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
+    <!--
+
+    TemplateMo 559 Shoes Shop
+
+    https://templatemo.com/tm-559-Shoes-shop
+
+    -->
+</head>
+
+<body>
+<!-- Start Top Nav -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+    <div class="container text-light">
+        <div class="w-100 d-flex justify-content-between">
+            <div>
+                <i class="fa fa-envelope mx-2"></i>
+                <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                <i class="fa fa-phone mx-2"></i>
+                <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+            </div>
+            <div>
+                <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i
+                        class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                <a class="text-light" href="https://www.instagram.com/" target="_blank"><i
+                        class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                <a class="text-light" href="https://twitter.com/" target="_blank"><i
+                        class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i
+                        class="fab fa-linkedin fa-sm fa-fw"></i></a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Close Top Nav -->
+
+
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-light shadow">
+    <div class="container d-flex justify-content-between align-items-center">
+
+        <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+            Shoes
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
+             id="templatemo_main_nav">
+            <div class="flex-fill">
+                <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/home}">Trang chủ </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/about}">Về chúng tôi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/shop}">Sản phẩm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/contact}">Liên hệ</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar align-self-center d-flex">
+                <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                        <div class="input-group-text">
+                            <i class="fa fa-fw fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+                <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
+                   data-bs-target="#templatemo_search">
+                    <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                </a>
+
+                <div th:if="${user != null}">
+                    <a class="nav-icon position-relative text-decoration-none" th:href="@{/cart}">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"
+                              th:text="${cartItemQuantity}"></span>
+                    </a>
+
+                    <a class="nav-icon position-relative text-decoration-none" href="#" id="dropdownMenuButton"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" th:href="@{/update-use}">Thông tin cá nhân</a>
+                        <a class="dropdown-item" th:href="@{/order}">Thông tin đơn hàng</a>                        <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
+                    </div>
+                </div>
+
+                <div th:unless="${user != null}">
+                    <a href="/login">Đăng nhập</a>|
+                    <a href="/register">Đăng ký</a>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</nav>
+<!-- Close Header -->
+
+
+<div class="untree_co-section before-footer-section">
+    <div class="container">
+        <div class="row mb-5" style="
+    padding-top: 20px;">
+            <div th:each=" order, iterStat : ${orders}
+        " class="order-box bg-white shadow-sm rounded">
+                <h2 class="h4 text-success">Mã #<span th:text="${iterStat.index + 1}"></span> - Trạng thái đơn hàng:
+                    <span th:switch="${order.status}">
+                                <span th:case="'PENDING'">Chờ xác nhận</span>
+                                <span th:case="'CONFIRMED'">Đã xác nhận</span>
+                                <span th:case="'PROCESSING'">Đang chuẩn bị hàng</span>
+                                <span th:case="'SHIPPING'">Đang giao hàng</span>
+                                <span th:case="'DELIVERED'">Đã giao hàng</span>
+                                <span th:case="'CANCEL'">Đã hủy</span>
+                                <span th:case="*">Không xác định</span>
+                            </span>
+                </h2>
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="product-thumbnail" style="width: 150px">Hình ảnh</th>
+                        <th class="product-name" style="width: 350px">Sản phẩm</th>
+                        <th class="product-price" style="width: 200px">Giá tiền(VND)</th>
+                        <th class="product-quantity"style="width: 80px">Số lượng</th>
+                        <th class="product-total" style="width: 200px">Thành tiền(VND)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="orderItem : ${order.orderItems}">
+                        <td class="product-thumbnail" style="width: 150px">
+                            <!--                            <img th:src="@{${orderItem.product.imageUrl}}" alt="Image" class="img-fluid rounded">-->
+                            <img th:src="@{'/assets/img/products/' + ${orderItem.product.imageUrl}}" alt="Image"
+                                 class="img-fluid rounded"
+                                 style="max-width: 100px; height: auto;">
+
+                        </td>
+                        <td class="product-name" style="width: 350px">
+                            <h5>
+                                <a th:href="@{'/product/' + ${orderItem.product.id}}" style="text-decoration: none; color: inherit;">
+                                    <span th:text="${orderItem.product.name}"></span>
+                                </a>
+                            </h5>
+                        </td>
+
+                        <td class="product-price" style="width: 200px" >
+                            <span th:text="${orderItem.price}/${orderItem.quantity}"></span>
+                        </td>
+                        <td class="product-quantity" style="width: 80px">
+                            <span th:text="${orderItem.quantity}"></span>
+                        </td>
+                        <td class="product-total" style="width: 200px">
+                            <strong><em th:text="${orderItem.price}"></em></strong>
+                        </td>
+
+                        <!--                        <td class="product-remove">-->
+                        <!--                            <button class="btn btn-remove btn-sm">Remove</button>-->
+                        <!--                        </td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--            <div class="col-md-6">-->
+            <!--                <div class="row mb-5">-->
+            <!--                    <div class="col-md-6 mb-3 mb-md-0">-->
+            <!--                        <button class="btn btn-black btn-sm btn-block">Update Cart</button>-->
+            <!--                    </div>-->
+            <!--                    <div class="col-md-6">-->
+            <!--                        <button class="btn btn-outline-black btn-sm btn-block">Continue Shopping</button>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="row">-->
+            <!--                    <div class="col-md-12">-->
+            <!--                        <label class="text-black h4" for="coupon">Coupon</label>-->
+            <!--                        <p>Enter your coupon code if you have one.</p>-->
+            <!--                    </div>-->
+            <!--                    <div class="col-md-8 mb-3 mb-md-0">-->
+            <!--                        <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">-->
+            <!--                    </div>-->
+            <!--                    <div class="col-md-4">-->
+            <!--                        <button class="btn btn-black">Apply Coupon</button>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--            <div class="col-md-6 pl-5">-->
+            <!--                <div class="row justify-content-end">-->
+            <!--                    <div class="col-md-7">-->
+            <!--                        <div class="row">-->
+            <!--                            <div class="col-md-12 text-right border-bottom mb-5">-->
+            <!--                                <h3 class="text-black h4 text-uppercase">Cart Totals</h3>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                        <div class="row mb-3">-->
+            <!--                            <div class="col-md-6">-->
+            <!--                                <span class="text-black">Subtotal</span>-->
+            <!--                            </div>-->
+            <!--                            <div class="col-md-6 text-right">-->
+            <!--                                <strong class="text-black">$230.00</strong>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                        <div class="row mb-5">-->
+            <!--                            <div class="col-md-6">-->
+            <!--                                <span class="text-black">Total</span>-->
+            <!--                            </div>-->
+            <!--                            <div class="col-md-6 text-right">-->
+            <!--                                <strong class="text-black">$230.00</strong>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+
+            <!--                        <div class="row">-->
+            <!--                            <div class="col-md-12">-->
+            <!--                                <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='checkout.html'">Proceed To Checkout</button>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+        </div>
+    </div>
+</div>
+
+
+<!-- Start Footer -->
+<footer class="bg-dark" id="tempaltemo_footer">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 pt-5">
+                <h2 class="h2 text-success border-bottom pb-3 border-light logo">Shoes Shop</h2>
+                <ul class="list-unstyled text-light footer-link-list">
+                    <li>
+                        <i class="fas fa-map-marker-alt fa-fw"></i>
+                        123 Consectetur at ligula 10660
+                    </li>
+                    <li>
+                        <i class="fa fa-phone fa-fw"></i>
+                        <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-envelope fa-fw"></i>
+                        <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 pt-5">
+                <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
+                <ul class="list-unstyled text-light footer-link-list">
+                    <li><a class="text-decoration-none" href="#">Luxury</a></li>
+                    <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
+                    <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
+                    <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
+                    <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
+                    <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
+                    <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 pt-5">
+                <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+                <ul class="list-unstyled text-light footer-link-list">
+                    <li><a class="text-decoration-none" href="#">Home</a></li>
+                    <li><a class="text-decoration-none" href="#">About Us</a></li>
+                    <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
+                    <li><a class="text-decoration-none" href="#">FAQs</a></li>
+                    <li><a class="text-decoration-none" href="#">Contact</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="row text-light mb-4">
+            <div class="col-12 mb-3">
+                <div class="w-100 my-3 border-top border-light"></div>
+            </div>
+            <div class="col-auto me-auto">
+                <ul class="list-inline text-left footer-icons">
+                    <li class="list-inline-item border border-light rounded-circle text-center">
+                        <a rel="nofollow" class="text-light text-decoration-none" target="_blank"
+                           href="http://fb.com/templatemo"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                    </li>
+                    <li class="list-inline-item border border-light rounded-circle text-center">
+                        <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i
+                                class="fab fa-instagram fa-lg fa-fw"></i></a>
+                    </li>
+                    <li class="list-inline-item border border-light rounded-circle text-center">
+                        <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
+                                class="fab fa-twitter fa-lg fa-fw"></i></a>
+                    </li>
+                    <li class="list-inline-item border border-light rounded-circle text-center">
+                        <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i
+                                class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-auto">
+                <label class="sr-only" for="subscribeEmail">Email address</label>
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control bg-dark border-light" id="subscribeEmail"
+                           placeholder="Email address">
+                    <div class="input-group-text btn-success text-light">Subscribe</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-100 bg-black py-3">
+        <div class="container">
+            <div class="row pt-2">
+                <div class="col-12">
+                    <p class="text-left text-light">
+                        Copyright &copy; 2021 Company Name
+                        | Designed by <a rel="sponsored" href="https://templatemo.com/page/1"
+                                         target="_blank">TemplateMo</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+<!-- End Footer -->
+
+
+<script src="./assets2/js/bootstrap.bundle.min.js"></script>
+<script src="./assets2/js/tiny-slider.js"></script>
+<script src="./assets2/js/custom.js"></script>
+</body>
+
+</html>
