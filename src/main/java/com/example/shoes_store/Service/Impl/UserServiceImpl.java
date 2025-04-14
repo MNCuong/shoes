@@ -49,9 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Order> getOrdersByUserId(Long UserId) {
-        return userRepo.findById(UserId)
-                .map(User -> User.getOrders())
-                .orElse(null);
+        return userRepo.findById(UserId).map(User -> User.getOrders()).orElse(null);
     }
 
     @Override

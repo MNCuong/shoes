@@ -11,14 +11,20 @@ import java.util.List;
 
 
 public interface CategoryService {
-   
-     List<Category> getAll();
-     List<Category> getAllWithActive();
-     void addCategory(Category category) ;
-     Category updateCategory(Category category) ;
-     void deleteCategory(Long id) ;
-     Category getCategoryById(Long id) ;
-     Category toggleCategoryStatus(Long id);
+
+    List<Category> getAll();
+
+    List<Category> getAllWithActive();
+
+    void addCategory(Category category);
+
+    Category updateCategory(Category category);
+
+    void deleteCategory(Long id);
+
+    Category getCategoryById(Long id);
+
+    Category toggleCategoryStatus(Long id);
 
 
 }

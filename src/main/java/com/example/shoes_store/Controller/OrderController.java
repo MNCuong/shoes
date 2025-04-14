@@ -42,9 +42,9 @@ public class OrderController {
 
 
     @PostMapping("/updateStatus")
-    public String updateOrderStatus(@RequestParam("orderId") Long orderId,@RequestParam String status, RedirectAttributes redirectAttributes) {
+    public String updateOrderStatus(@RequestParam("orderId") Long orderId, @RequestParam String status, RedirectAttributes redirectAttributes) {
         try {
-            orderService.updateStatus(orderId,status);
+            orderService.updateStatus(orderId, status);
             redirectAttributes.addFlashAttribute("message", "Cập nhật trạng thái đơn hàng thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Lỗi cập nhật trạng thái đơn hàng!");
@@ -62,6 +62,7 @@ public class OrderController {
         }
         return "redirect:/order";
     }
+
     @GetMapping("/revenue-by-day")
     @ResponseBody
     public Map<String, String> getRevenueByDay(@RequestParam int month, @RequestParam int year) {

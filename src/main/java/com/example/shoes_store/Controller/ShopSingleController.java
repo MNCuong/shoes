@@ -24,9 +24,10 @@ public class ShopSingleController {
     private ProductService productService;
     @Autowired
     private ProductReviewRepo productReviewRepo;
+
     @GetMapping("/{productId}")
     public String getProductById(HttpSession session, @PathVariable("productId") Long productId, Model model) {
-        Product product =productService.getProductById(productId).get();
+        Product product = productService.getProductById(productId).get();
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser != null) {
             Optional<ProductReview> existingReview = productReviewRepo.findByUserIdAndProductId(loggedInUser.getId(), productId);

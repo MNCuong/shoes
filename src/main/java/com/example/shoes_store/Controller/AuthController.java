@@ -19,6 +19,7 @@ public class AuthController {
 
     @Autowired
     CartItemService cartItemService;
+
     public AuthController(UserService userService) {
         this.userService = userService;
     }
@@ -57,7 +58,7 @@ public class AuthController {
     public String homePage(HttpSession session, Model model) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         model.addAttribute("user", loggedInUser);
-        int cartItemQuantity=cartItemService.getQuantity(loggedInUser);
+        int cartItemQuantity = cartItemService.getQuantity(loggedInUser);
         log.info("cartItemQuantity {}", cartItemQuantity);
         model.addAttribute("cartItemQuantity", cartItemQuantity);
         return "/user/home";
@@ -93,6 +94,7 @@ public class AuthController {
         model.addAttribute("message", "Đăng ký thành công!");
         return "redirect:login";
     }
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();

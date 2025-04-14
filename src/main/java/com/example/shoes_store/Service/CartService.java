@@ -19,17 +19,16 @@ import java.util.Optional;
 
 public interface CartService {
 
-     Cart getCartByUserId(Long userid);
+    Cart getCartByUserId(Long userid);
 
-     void updateCartTotalPrice(Cart cart) ;
+    void updateCartTotalPrice(Cart cart);
 
-     void removeProductFromCart(Long cartId, Long productId,int size);
+    void removeProductFromCart(Long cartId, Long productId, int size);
 
-     void clearCart(Long cartId) ;
+    void clearCart(Long cartId);
 
+    Cart updateCartItem(Long cartItemId, Integer quantity);
 
-     Cart updateCartItem(Long cartItemId, Integer quantity);
-
-     void addToCart(User user, Long productId, int quantity, String size);
+    void addToCart(User user, Long productId, int quantity, String size);
 
 }

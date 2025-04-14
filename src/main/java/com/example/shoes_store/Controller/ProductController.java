@@ -47,31 +47,22 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PostMapping("/add")
     public String addProduct(@RequestParam MultipartFile productImage, @ModelAttribute Product product) {
-        productService.saveProduct(productImage,product);
+        productService.saveProduct(productImage, product);
         return "redirect:/admin/home";
     }
 
-//    // Sửa sản phẩm
-//    @GetMapping("/edit/{id}")
-//    public String editProductPage(@PathVariable Long id, Model model) {
-//        Product product = productService.getProductById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("Product with ID " + id + " not found"));
-//        model.addAttribute("product", product);
-//        return "admin/edit-product"; // Trang sửa sản phẩm
-//    }
-
     @PostMapping("/edit")
-    public String editProduct(@RequestParam MultipartFile productImage,@ModelAttribute Product product) {
-        if(product==null){
+    public String editProduct(@RequestParam MultipartFile productImage, @ModelAttribute Product product) {
+        if (product == null) {
             return "redirect:/admin/home";
         }
-        productService.updateProduct(productImage,product);
+        productService.updateProduct(productImage, product);
         log.info("product ID {}", product.getId());
         return "redirect:/admin/home";
     }
-
 
 
     @PostMapping("/delete/{id}")
@@ -80,12 +71,13 @@ public class ProductController {
         return "redirect:/admin/home";
 
     }
+
     @GetMapping("/list-product/{categoryId}")
     public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable Long categoryId) {
-        List<Product> products=new ArrayList<>();
-        if(categoryId==0){
-            products=productRepo.findByCategory_Active(true);
-        }else{
+        List<Product> products = new ArrayList<>();
+        if (categoryId == 0) {
+            products = productRepo.findByCategory_Active(true);
+        } else {
             products = productRepo.findByCategory_Id(categoryId);
         }
 
@@ -97,6 +89,7 @@ public class ProductController {
         productService.toggleProductStatus(id);
         return "redirect:/admin/home";
     }
+
     @PostMapping("/reviews/add-review")
     public String addReview(@RequestParam Long productId,
                             @RequestParam int rating,
@@ -110,7 +103,7 @@ public class ProductController {
             return "redirect:/login";
         }
 
-        productReviewServiceImpl.saveReview(user,productId,rating,comment);
+        productReviewServiceImpl.saveReview(user, productId, rating, comment);
         redirectAttributes.addFlashAttribute("success", "Đánh giá thành công!");
         return "redirect:/product/" + productId;
     }

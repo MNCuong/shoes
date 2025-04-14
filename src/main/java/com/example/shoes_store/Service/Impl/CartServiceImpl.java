@@ -28,6 +28,7 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private ProductRepo productRepo;
+
     @Override
     public Cart getCartByUserId(Long userid) {
         return cartRepo.findByUser_IdOrderByIdDesc(userid).orElse(new Cart());
@@ -41,8 +42,9 @@ public class CartServiceImpl implements CartService {
         cart.setTotalPrice(totalPrice);
         cartRepo.save(cart);
     }
+
     @Override
-    public void removeProductFromCart(Long cartId, Long productId,int size) {
+    public void removeProductFromCart(Long cartId, Long productId, int size) {
         Optional<Cart> cartOptional = cartRepo.findById(cartId);
         Optional<Product> productOptional = productRepo.findById(productId);
 
@@ -58,6 +60,7 @@ public class CartServiceImpl implements CartService {
             }
         }
     }
+
     @Override
     public void clearCart(Long cartId) {
         Cart cart = cartRepo.findById(cartId)
@@ -138,14 +141,10 @@ public class CartServiceImpl implements CartService {
             newItem.setTotalPrice(newItemTotal);
             cart.getCartItems().add(newItem);
             cartItemRepo.save(newItem);
-
         }
-
         BigDecimal cartTotal = cart.getCartItems().stream()
                 .map(CartItem::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-
         cart.setTotalPrice(cartTotal);
         cartRepo.save(cart);
     }

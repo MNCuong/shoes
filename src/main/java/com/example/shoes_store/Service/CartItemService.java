@@ -5,6 +5,6 @@ import com.example.shoes_store.Entity.User;
 
 
 public interface CartItemService {
-    int getQuantity(User user) ;
+    int getQuantity(User user);
 
 }

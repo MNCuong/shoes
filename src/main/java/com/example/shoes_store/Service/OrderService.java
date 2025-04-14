@@ -17,19 +17,20 @@ import java.util.*;
 
 
 public interface OrderService {
-   
-     List<Order> getAllOrders() ;
 
-     Optional<Order> getOrderById(Long id);
+    List<Order> getAllOrders();
 
-     void updateStatus(Long orderId, String status);
+    Optional<Order> getOrderById(Long id);
 
-     List<Order> getOrdersByUserId(Long userId) ;
+    void updateStatus(Long orderId, String status);
 
-     List<Order> getOrderByUser(User user) ;
-     Map<String, String> getRevenueByDay(int month, int year);
+    List<Order> getOrdersByUserId(Long userId);
 
-     Boolean addOrder(OrderRequest request) ;
-    
+    List<Order> getOrderByUser(User user);
+
+    Map<String, String> getRevenueByDay(int month, int year);
+
+    Boolean addOrder(OrderRequest request);
+
 
 }

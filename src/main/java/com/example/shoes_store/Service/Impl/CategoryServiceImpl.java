@@ -59,8 +59,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category toggleCategoryStatus(Long id) {
-        Category category = categoryRepo.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Category with ID " + id + " not found"));
+        Category category = categoryRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Category with ID " + id + " not found"));
 
         category.setActive(!category.isActive());
         return categoryRepo.save(category);

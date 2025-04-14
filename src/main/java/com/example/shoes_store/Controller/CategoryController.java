@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.example.shoes_store.Entity.Category;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
 @Slf4j
 @Controller
 @RequestMapping("/categories")
