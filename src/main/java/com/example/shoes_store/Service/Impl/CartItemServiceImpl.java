@@ -18,15 +18,14 @@ public class CartItemServiceImpl implements CartItemService {
     CartItemRepo cartItemRepo;
     @Autowired
     CartRepo cartRepo;
+
     @Override
     public int getQuantity(User user) {
         Optional<Cart> optionalCart = cartRepo.findByUser(user);
         if (optionalCart.isEmpty()) {
             return 0;
         }
-
         List<CartItem> items = cartItemRepo.findByCart(optionalCart.get());
-
         return items.size();
     }
 

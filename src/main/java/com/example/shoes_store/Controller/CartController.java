@@ -20,6 +20,7 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
+
     @PostMapping("/update")
     public String updateCartItem(@RequestBody UpdateCartRequest request) {
         Cart updatedCart = cartService.updateCartItem(request.getCartItemId(), request.getQuantity());
@@ -52,7 +53,6 @@ public class CartController {
 
         return ResponseEntity.ok("Xóa thành công");
     }
-
 
 
     @PostMapping("/checkout/{cartId}")

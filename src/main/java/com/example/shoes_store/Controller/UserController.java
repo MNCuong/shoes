@@ -102,12 +102,13 @@ public class UserController {
     @GetMapping("/about")
     public String aboutPage(HttpSession session, Model model) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        int cartItemQuantity=cartItemService.getQuantity(loggedInUser);
+        int cartItemQuantity = cartItemService.getQuantity(loggedInUser);
         log.info("cartItemQuantity {}", cartItemQuantity);
         model.addAttribute("cartItemQuantity", cartItemQuantity);
         model.addAttribute("user", loggedInUser);
         return "/user/about";
     }
+
     @GetMapping("/update-use")
     public String updateUserInfoPage(HttpSession session, Model model) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -118,7 +119,7 @@ public class UserController {
     @GetMapping("/contact")
     public String contactPage(HttpSession session, Model model) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        int cartItemQuantity=cartItemService.getQuantity(loggedInUser);
+        int cartItemQuantity = cartItemService.getQuantity(loggedInUser);
         log.info("cartItemQuantity {}", cartItemQuantity);
         model.addAttribute("cartItemQuantity", cartItemQuantity);
         model.addAttribute("user", loggedInUser);
@@ -130,26 +131,29 @@ public class UserController {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             return "redirect:/login";
-        }int cartItemQuantity=cartItemService.getQuantity(loggedInUser);
+        }
+        int cartItemQuantity = cartItemService.getQuantity(loggedInUser);
         log.info("cartItemQuantity {}", cartItemQuantity);
         model.addAttribute("cartItemQuantity", cartItemQuantity);
-        model.addAttribute("cart",cartService.getCartByUserId(loggedInUser.getId()));
+        model.addAttribute("cart", cartService.getCartByUserId(loggedInUser.getId()));
         model.addAttribute("user", loggedInUser);
         return "/user/cart";
     }
+
     @GetMapping("/order")
     public String orderPage(HttpSession session, Model model) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
             return "redirect:/login";
         }
-        int cartItemQuantity=cartItemService.getQuantity(loggedInUser);
+        int cartItemQuantity = cartItemService.getQuantity(loggedInUser);
         log.info("cartItemQuantity {}", cartItemQuantity);
         model.addAttribute("cartItemQuantity", cartItemQuantity);
-        model.addAttribute("orders",orderService.getOrderByUser(loggedInUser));
+        model.addAttribute("orders", orderService.getOrderByUser(loggedInUser));
         model.addAttribute("user", loggedInUser);
         return "/user/order";
     }
+
     @GetMapping("/shop")
     public String shopPage(HttpSession session, Model model) {
         List<Category> categoriesActive = categoryService.getAllWithActive();
@@ -159,7 +163,7 @@ public class UserController {
 
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         model.addAttribute("user", loggedInUser);
-        int cartItemQuantity=cartItemService.getQuantity(loggedInUser);
+        int cartItemQuantity = cartItemService.getQuantity(loggedInUser);
         log.info("cartItemQuantity {}", cartItemQuantity);
         model.addAttribute("cartItemQuantity", cartItemQuantity);
 
@@ -169,7 +173,7 @@ public class UserController {
     @GetMapping("/shop-single")
     public String shopSinglePage(HttpSession session, Model model) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-        int cartItemQuantity=cartItemService.getQuantity(loggedInUser);
+        int cartItemQuantity = cartItemService.getQuantity(loggedInUser);
         log.info("cartItemQuantity {}", cartItemQuantity);
         model.addAttribute("cartItemQuantity", cartItemQuantity);
         model.addAttribute("user", loggedInUser);
@@ -181,7 +185,6 @@ public class UserController {
                                  HttpSession session) {
         userService.updateUser(updatedUser);
         session.setAttribute("loggedInUser", updatedUser);
-
         return "redirect:/update-use";
     }
 

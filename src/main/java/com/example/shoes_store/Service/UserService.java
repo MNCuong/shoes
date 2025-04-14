@@ -11,21 +11,22 @@ import java.util.List;
 
 
 public interface UserService {
-  
 
-     User login(String username, String password) ;
 
-     List<User> getAllUsers() ;
+    User login(String username, String password);
 
-     List<User> getAllUsersByRole(String role);
+    List<User> getAllUsers();
 
-     User getUserById(Long id) ;
+    List<User> getAllUsersByRole(String role);
 
-     List<Order> getOrdersByUserId(Long UserId);
+    User getUserById(Long id);
 
-     User registerUser(User user) ;
+    List<Order> getOrdersByUserId(Long UserId);
 
-     boolean userExists(String username);
-     void updateUser(User updatedUser) ;
+    User registerUser(User user);
+
+    boolean userExists(String username);
+
+    void updateUser(User updatedUser);
 }
 

@@ -27,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProducts() {
         return productRepo.findAll();
     }
+
     @Override
     public List<Product> getAllProductsWithCateActive() {
         return productRepo.findByCategory_Active(true);
@@ -91,7 +92,6 @@ public class ProductServiceImpl implements ProductService {
     public Product toggleProductStatus(Long id) {
         Product category = productRepo.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Category with ID " + id + " not found"));
-
         category.setActive(!category.isActive());
         return productRepo.save(category);
     }

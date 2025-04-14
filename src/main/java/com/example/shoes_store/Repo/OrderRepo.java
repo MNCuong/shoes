@@ -11,11 +11,13 @@ import java.util.List;
 @Repository
 public interface OrderRepo extends JpaRepository<Order, Long> {
     List<Order> findByUser_IdOrderByIdDesc(Long userId);
+
     Order save(Order order);
+
     @Query("SELECT FUNCTION('DAY', o.orderDate) AS day, SUM(o.totalPrice) AS revenue " +
             "FROM Order o " +
             "WHERE FUNCTION('MONTH', o.orderDate) = :month AND FUNCTION('YEAR', o.orderDate) = :year " +
-            "AND o.status = 'DELIVERED' "+
+            "AND o.status = 'DELIVERED' " +
             "GROUP BY FUNCTION('DAY', o.orderDate) " +
             "ORDER BY day")
     List<Object[]> getRevenueByDayInMonth(@Param("month") int month, @Param("year") int year);

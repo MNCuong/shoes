@@ -18,19 +18,20 @@ import java.util.Optional;
 
 public interface ProductService {
 
-     List<Product> getAllProducts() ;
+    List<Product> getAllProducts();
 
-     List<Product> getAllProductsWithCateActive();
+    List<Product> getAllProductsWithCateActive();
 
-     Product saveProduct(MultipartFile productImage, Product product) ;
+    Product saveProduct(MultipartFile productImage, Product product);
 
-     void deleteProduct(Long id) ;
-     Optional<Product> getProductById(Long id) ;
+    void deleteProduct(Long id);
 
-     Product updateProduct(MultipartFile productImage, Product product);
+    Optional<Product> getProductById(Long id);
 
-     List<Product> getProductsByCategory(Long categoryId) ;
+    Product updateProduct(MultipartFile productImage, Product product);
 
-     Product toggleProductStatus(Long id);
+    List<Product> getProductsByCategory(Long categoryId);
+
+    Product toggleProductStatus(Long id);
 
 }
