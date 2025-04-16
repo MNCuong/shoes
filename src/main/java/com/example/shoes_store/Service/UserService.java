@@ -2,16 +2,17 @@ package com.example.shoes_store.Service;
 
 import com.example.shoes_store.Entity.Order;
 import com.example.shoes_store.Entity.User;
-import com.example.shoes_store.Repo.UserRepo;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.example.shoes_store.dto.ChangePasswordRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserService {
 
+    Optional<User> getByEmail(String username);
+
+    void changePassword(ChangePasswordRequest request, User user);
 
     User login(String username, String password);
 
@@ -28,5 +29,8 @@ public interface UserService {
     boolean userExists(String username);
 
     void updateUser(User updatedUser);
+
+    void save(User user);
+
 }
 

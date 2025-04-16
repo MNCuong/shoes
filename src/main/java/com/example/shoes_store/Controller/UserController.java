@@ -5,9 +5,11 @@ import com.example.shoes_store.Entity.Product;
 import com.example.shoes_store.Entity.User;
 import com.example.shoes_store.Entity.Order;
 import com.example.shoes_store.Service.*;
+import com.example.shoes_store.dto.ChangePasswordRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -188,4 +192,44 @@ public class UserController {
         return "redirect:/update-use";
     }
 
+    @PostMapping("/api/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (!request.getOldPassword().equals(loggedInUser.getPassword())) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Mật khẩu cũ không chính xác"));
+        }
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Mật khẩu xác nhận không khớp"));
+        }
+        userService.changePassword(request, loggedInUser);
+        return ResponseEntity.ok(Map.of("success", true, "message", "Đổi mật khẩu thành công"));
+    }
+
+    @PostMapping("/api/check-email")
+    public ResponseEntity<?> checkEmail(@RequestBody Map<String, String> req) {
+        String email = req.get("email");
+        Optional<User> userOpt = userService.getByEmail(email);
+        if (userOpt.isPresent()) {
+            return ResponseEntity.ok(Map.of("success", true, "message", "Email hợp lệ. Mời bạn nhập mật khẩu mới"));
+        }
+        return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Email không tồn tại"));
+    }
+
+    @PostMapping("/api/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> req) {
+        String email = req.get("email");
+        String newPassword = req.get("newPassword");
+        String confirmPassword = req.get("confirmPassword");
+        if (!newPassword.equals(confirmPassword)) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Mật khẩu xác nhận không khớp"));
+        }
+        Optional<User> userOpt = userService.getByEmail(email);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "Không tìm thấy tài khoản"));
+        }
+        User user = userOpt.get();
+        user.setPassword(newPassword);
+        userService.save(user);
+        return ResponseEntity.ok(Map.of("success", true, "message", "Đặt lại mật khẩu thành công"));
+    }
 }

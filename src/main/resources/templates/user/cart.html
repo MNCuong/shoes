@@ -161,9 +161,50 @@
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" th:href="@{/update-use}">Thông tin cá nhân</a>
+                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Đổi mật khẩu</a>
                         <a class="dropdown-item" th:href="@{/order}">Thông tin đơn hàng</a>
                         <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
                     </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="changePasswordModalLabel">Đổi Mật Khẩu</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                                </div>
+
+                                <form id="changePasswordForm">
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="oldPassword" class="form-label">Mật khẩu cũ</label>
+                                            <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="newPassword" class="form-label">Mật khẩu mới</label>
+                                            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu mới</label>
+                                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                                        </div>
+
+                                        <div id="changePasswordMessage" class="mt-2"></div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                        <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
 
                 <div th:unless="${user != null}">
@@ -499,5 +540,43 @@
             });
     });
 </script>
+<script>
+    document.getElementById("changePasswordForm").addEventListener("submit", function (e) {
+        e.preventDefault();
 
+        const oldPassword = document.getElementById("oldPassword").value;
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        const messageEl = document.getElementById("changePasswordMessage");
+
+        fetch('/api/change-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                oldPassword: oldPassword,
+                newPassword: newPassword,
+                confirmPassword: confirmPassword
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    messageEl.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+                    setTimeout(() => {
+                        document.getElementById("changePasswordForm").reset();
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('changePasswordModal'));
+                        modal.hide();
+                    }, 500);
+                } else {
+                    messageEl.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                messageEl.innerHTML = `<div class="alert alert-danger">Có lỗi xảy ra, vui lòng thử lại.</div>`;
+            });
+    });
+</script>
 </html>
