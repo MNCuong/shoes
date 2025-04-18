@@ -24,7 +24,7 @@ public interface OrderService {
 
     void updateStatus(Long orderId, String status);
 
-    List<Order> getOrdersByUserId(Long userId);
+//    List<Order> getOrdersByUserId(Long userId);
 
     List<Order> getOrderByUser(User user);
 

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -33,25 +34,20 @@ public class AuthController {
     public String login(@RequestParam String username,
                         @RequestParam String password,
                         HttpSession session,
-                        Model model) {
+                        Model model, RedirectAttributes redirectAttributes) {
         User user = userService.login(username, password);
 
         if (user != null) {
-            log.info("Đăng nhập thành công với người dùng: " + user.getUsername());
             if (user.getRole().equals("ADMIN")) {
-                log.info("Vai trò ADMIN được xác nhận.");
                 session.setAttribute("loggedInUser", user);
                 return "redirect:/admin/home";
             } else {
-                log.info("Vai trò người dùng: " + user.getRole());
                 session.setAttribute("loggedInUser", user);
                 return "redirect:/home";
             }
         }
-
-        log.info("Đăng nhập thất bại");
-        model.addAttribute("error", "Sai tên đăng nhập hoặc mật khẩu!");
-        return "/login";
+        redirectAttributes.addFlashAttribute("error", "Sai tên đăng nhập hoặc mật khẩu!");
+        return "redirect:login";
     }
 
     @GetMapping("/home")
@@ -79,7 +75,7 @@ public class AuthController {
 
         if (userService.userExists(username)) {
             model.addAttribute("error", "Tên người dùng đã tồn tại!");
-            return "register";
+            return "redirect:register";
         }
 
         User newUser = new User();

@@ -21,16 +21,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String username, String password) {
         User user = userRepo.findByUsername(username);
-        log.info("login user:{}", user);
-        log.info("login user:{}", user.getEmail());
-        log.info("login user:{}", user.getUsername());
-        log.info("login user:{}", user.getRole());
-
-        if (user.getPassword().equals(password)) {
-            log.info("login user:{}", user.getUsername());
-            return user;
+        if (user != null) {
+            if (user.getPassword().equals(password)) {
+                return user;
+            }
         }
-        log.info("login loi:{}", user.getUsername());
         return null;
     }
 

@@ -1088,57 +1088,7 @@
             });
     });
 </script>
-<!--<script>-->
-<!--    const currentMonth = new Date().getMonth();-->
 
-<!--    const labels = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];-->
-<!--    const revenueData = [120000, 150000, 130000, 160000, 180000, 200000, 220000, 210000, 190000, 250000, 270000, 300000];-->
-
-<!--    const currentRevenue = revenueData[currentMonth];-->
-
-<!--    const filteredLabels = [labels[currentMonth]];-->
-<!--    const filteredRevenueData = [currentRevenue];-->
-
-<!--    var ctx = document.getElementById('revenueChart').getContext('2d');-->
-<!--    var revenueChart = new Chart(ctx, {-->
-<!--        type: 'bar',-->
-<!--        data: {-->
-<!--            labels: filteredLabels,-->
-<!--            datasets: [{-->
-<!--                label: 'Doanh thu (VND)',-->
-<!--                data: filteredRevenueData,-->
-<!--                backgroundColor: 'rgba(54, 162, 235, 0.2)',-->
-<!--                borderColor: 'rgba(54, 162, 235, 1)',-->
-<!--                borderWidth: 1-->
-<!--            }]-->
-<!--        },-->
-<!--        options: {-->
-<!--            responsive: true,-->
-<!--            plugins: {-->
-<!--                legend: {-->
-<!--                    position: 'top',-->
-<!--                },-->
-<!--                tooltip: {-->
-<!--                    callbacks: {-->
-<!--                        label: function(tooltipItem) {-->
-<!--                            return 'Doanh thu: ' + tooltipItem.raw.toLocaleString() + ' VND';-->
-<!--                        }-->
-<!--                    }-->
-<!--                }-->
-<!--            },-->
-<!--            scales: {-->
-<!--                y: {-->
-<!--                    beginAtZero: true,-->
-<!--                    ticks: {-->
-<!--                        callback: function(value) {-->
-<!--                            return value.toLocaleString() + ' VND';-->
-<!--                        }-->
-<!--                    }-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
-<!--    });-->
-<!--</script>-->
 <script>
     const ctx = document.getElementById('revenueChart').getContext('2d');
     let revenueChart;

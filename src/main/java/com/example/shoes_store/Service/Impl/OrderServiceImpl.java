@@ -76,10 +76,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    @Override
-    public List<Order> getOrdersByUserId(Long userId) {
-        return orderRepo.findByUser_IdOrderByIdDesc(userId);
-    }
+//    @Override
+//    public List<Order> getOrdersByUserId(Long userId) {
+//        return orderRepo.findByUser_IdOrderByIdDesc(userId);
+//    }
 
     @Override
     public List<Order> getOrderByUser(User user) {
