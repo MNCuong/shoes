@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -67,6 +68,11 @@ public class OrderController {
     @ResponseBody
     public Map<String, String> getRevenueByDay(@RequestParam int month, @RequestParam int year) {
         return orderService.getRevenueByDay(month, year);
+    }
+    @GetMapping("/revenue-by-quarter")
+    @ResponseBody
+    public Map<Integer, BigDecimal> getRevenueByQuarter(@RequestParam int quarter, @RequestParam int year) {
+        return orderService.getRevenueByQuarter(quarter, year);
     }
 
 }

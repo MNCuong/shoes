@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.YearMonth;
 import java.util.*;
 
 @Slf4j
@@ -50,6 +53,7 @@ public class OrderServiceImpl implements OrderService {
         if ("CANCEL".equalsIgnoreCase(status)) {
             if (!"DELIVERED".equals(order.getStatus()) && !"CANCEL".equals(order.getStatus())) {
                 order.setStatus("CANCEL");
+                order.setPaymentStatus("Cancel");
             } else {
                 throw new IllegalStateException("Không thể hủy đơn đã giao hoặc đã bị hủy");
             }
@@ -66,6 +70,7 @@ public class OrderServiceImpl implements OrderService {
                     break;
                 case "SHIPPING":
                     order.setStatus("DELIVERED");
+                    order.setPaymentStatus("Payment");
                     break;
                 default:
                     throw new IllegalStateException("Trạng thái không hợp lệ hoặc không thể cập nhật");
@@ -114,6 +119,7 @@ public class OrderServiceImpl implements OrderService {
             order.setFullName(request.getFullName());
             order.setPhone(request.getPhone());
             order.setOrderDate(LocalDateTime.now());
+            order.setPaymentStatus("Wait for payment");
 
             Cart cart = cartRepo.findById(request.getCartId())
                     .orElseThrow(() -> new RuntimeException("Cart not found"));
@@ -154,5 +160,28 @@ public class OrderServiceImpl implements OrderService {
             return false;
         }
     }
+
+    @Override
+    public Map<Integer, BigDecimal> getRevenueByQuarter(int quarter, int year) {
+        Map<Integer, BigDecimal> revenueMap = new LinkedHashMap<>();
+        int startMonth = (quarter - 1) * 3 + 1;
+
+        for (int i = 0; i < 3; i++) {
+            int month = startMonth + i;
+
+            LocalDate start = LocalDate.of(year, month, 1);
+            LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
+
+            LocalDateTime startDateTime = start.atStartOfDay();
+            LocalDateTime endDateTime = end.atTime(LocalTime.MAX);
+
+            BigDecimal revenue = orderRepo.sumRevenueBetween(startDateTime, endDateTime);
+            revenueMap.put(month, revenue);
+        }
+
+        return revenueMap;
+    }
+
+
 
 }

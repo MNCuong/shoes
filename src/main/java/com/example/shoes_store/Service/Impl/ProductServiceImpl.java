@@ -62,9 +62,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(MultipartFile productImage, Product product) {
-        log.info("" +
-                "Updating product with ID " + product.getId());
-        if (productRepo.existsById(product.getId())) {
+        Product existingProduct = productRepo.findById(product.getId()).orElseThrow(() -> new RuntimeException("Product not found"));
+
+        if (existingProduct != null) {
             if (!productImage.isEmpty()) {
                 String originalFileName = productImage.getOriginalFilename();
                 product.setImageUrl(originalFileName);
@@ -76,6 +76,9 @@ public class ProductServiceImpl implements ProductService {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            } else {
+                product.setImageUrl(existingProduct.getImageUrl());
+
             }
             return productRepo.save(product);
         } else {

@@ -61,6 +61,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean emailExists(String email) {
+        return userRepo.existsByEmail(email);
+    }
+
+    @Override
     public void updateUser(User updatedUser) {
         User existingUser = userRepo.findById(updatedUser.getId()).orElse(null);
         if (existingUser != null) {

@@ -114,41 +114,49 @@
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" th:href="@{/update-use}">Thông tin cá nhân</a>
-                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Đổi mật khẩu</a>
+                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Đổi mật
+                            khẩu</a>
                         <a class="dropdown-item" th:href="@{/order}">Thông tin đơn hàng</a>
                         <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
                     </div>
                     <!-- Modal -->
-                    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="changePasswordModal" tabindex="-1"
+                         aria-labelledby="changePasswordModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
 
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="changePasswordModalLabel">Đổi Mật Khẩu</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Đóng"></button>
                                 </div>
 
                                 <form id="changePasswordForm">
                                     <div class="modal-body">
                                         <div class="mb-3">
                                             <label for="oldPassword" class="form-label">Mật khẩu cũ</label>
-                                            <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
+                                            <input type="password" class="form-control" id="oldPassword"
+                                                   name="oldPassword" required>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="newPassword" class="form-label">Mật khẩu mới</label>
-                                            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                                            <input type="password" class="form-control" id="newPassword"
+                                                   name="newPassword" required>
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu mới</label>
-                                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                                            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu
+                                                mới</label>
+                                            <input type="password" class="form-control" id="confirmPassword"
+                                                   name="confirmPassword" required>
                                         </div>
 
                                         <div id="changePasswordMessage" class="mt-2"></div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng
+                                        </button>
                                         <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
                                     </div>
                                 </form>
@@ -158,16 +166,16 @@
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
 
-                <div th:unless="${user != null}">
-                    <a href="/login">Đăng nhập</a>|
-                    <a href="/register">Đăng ký</a>
-
-                </div>
+            <div th:unless="${user != null}">
+                <a href="/login">Đăng nhập</a>|
+                <a href="/register">Đăng ký</a>
 
             </div>
+
         </div>
+    </div>
 
     </div>
 </nav>
@@ -180,6 +188,9 @@
     padding-top: 20px;">
             <div th:each=" order, iterStat : ${orders}
         " class="order-box bg-white shadow-sm rounded">
+                <div th:if="${#lists.isEmpty(order.orderItems)}">
+                    <span colspan="7" class="text-center">Bạn chưa có tạo đơn hàng</span>
+                </div>
                 <h2 class="h4 text-success">Mã #<span th:text="${order.code}"></span> - Trạng thái đơn hàng:
                     <span th:switch="${order.status}">
                                 <span th:case="'PENDING'">Chờ xác nhận</span>
@@ -193,17 +204,20 @@
                 </h2>
                 <table class="table table-bordered table-hover">
                     <thead class="thead-light">
+
                     <tr>
-                        <th class="product-thumbnail" style="width: 150px">Hình ảnh</th>
+                        <th class="product-thumbnail" style="width: 120px">Hình ảnh</th>
                         <th class="product-name" style="width: 350px">Sản phẩm</th>
-                        <th class="product-price" style="width: 200px">Giá tiền(VND)</th>
-                        <th class="product-quantity"style="width: 80px">Số lượng</th>
+                        <th class="product-price" style="width: 150px">Giá tiền(VND)</th>
+                        <th class="product-quantity" style="width: 80px">Số lượng</th>
                         <th class="product-total" style="width: 200px">Thành tiền(VND)</th>
+                        <th class="product-total" style="width: 200px">Trạng thái thanh toán</th>
                     </tr>
                     </thead>
                     <tbody>
+
                     <tr th:each="orderItem : ${order.orderItems}">
-                        <td class="product-thumbnail" style="width: 150px">
+                        <td class="product-thumbnail" style="width: 120px">
                             <!--                            <img th:src="@{${orderItem.product.imageUrl}}" alt="Image" class="img-fluid rounded">-->
                             <img th:src="@{'/assets/img/products/' + ${orderItem.product.imageUrl}}" alt="Image"
                                  class="img-fluid rounded"
@@ -212,21 +226,33 @@
                         </td>
                         <td class="product-name" style="width: 350px">
                             <h5>
-                                <a th:href="@{'/product/' + ${orderItem.product.id}}" style="text-decoration: none; color: inherit;">
+                                <a th:href="@{'/product/' + ${orderItem.product.id}}"
+                                   style="text-decoration: none; color: inherit;">
                                     <span th:text="${orderItem.product.name}"></span>
                                 </a>
                             </h5>
                         </td>
 
-                        <td class="product-price" style="width: 200px" >
+                        <td class="product-price" style="width: 200px">
                             <span th:text="${orderItem.price}/${orderItem.quantity}"></span>
                         </td>
                         <td class="product-quantity" style="width: 80px">
                             <span th:text="${orderItem.quantity}"></span>
                         </td>
-                        <td class="product-total" style="width: 200px">
+                        <td class="product-total" style="width: 150px">
                             <strong><em th:text="${orderItem.price}"></em></strong>
                         </td>
+                        <td class="order-status-payment" style="width: 150px">
+                            <strong><em>
+                                <span th:switch="${order.paymentStatus}">
+                                    <span th:case="'Wait for payment'">Chờ thanh toán</span>
+                                    <span th:case="'Payment'">Đã thanh toán</span>
+                                    <span th:case="'Cancel'">Đã hủy</span>
+                                    <span th:case="*">Không xác định</span>
+                                </span>
+                            </em></strong>
+                        </td>
+
 
                         <!--                        <td class="product-remove">-->
                         <!--                            <button class="btn btn-remove btn-sm">Remove</button>-->

@@ -33,6 +33,7 @@ public class Order {
     private LocalDateTime orderDate;
     private BigDecimal totalPrice;
     private String code;
+    private String paymentStatus;
 
     public Order() {
 

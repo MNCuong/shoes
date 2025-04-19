@@ -71,10 +71,16 @@ public class AuthController {
                            @RequestParam String email,
                            @RequestParam String fullname,
                            @RequestParam String address,
-                           Model model) {
+                           Model model, RedirectAttributes redirectAttributes) {
 
         if (userService.userExists(username)) {
             model.addAttribute("error", "Tên người dùng đã tồn tại!");
+            redirectAttributes.addFlashAttribute("error", "Tên người dùng đã tồn tại!");
+            return "redirect:register";
+        }
+        if (userService.emailExists(email)) {
+            model.addAttribute("error", "Email đã tồn tại!");
+            redirectAttributes.addFlashAttribute("error", "Email đã tồn tại!");
             return "redirect:register";
         }
 
@@ -88,6 +94,8 @@ public class AuthController {
         userService.registerUser(newUser);
 
         model.addAttribute("message", "Đăng ký thành công!");
+        redirectAttributes.addFlashAttribute("message", "Đăng ký thành công!");
+
         return "redirect:login";
     }
 

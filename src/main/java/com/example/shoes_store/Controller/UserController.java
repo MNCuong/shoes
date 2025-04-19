@@ -116,6 +116,11 @@ public class UserController {
     @GetMapping("/update-use")
     public String updateUserInfoPage(HttpSession session, Model model) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
+        int cartItemQuantity = cartItemService.getQuantity(loggedInUser);
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("cartItemQuantity", cartItemQuantity);
         model.addAttribute("user", loggedInUser);
         return "/user/updateUserInfo";
     }

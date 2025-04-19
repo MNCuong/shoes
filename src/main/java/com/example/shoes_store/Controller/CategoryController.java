@@ -44,7 +44,6 @@ public class CategoryController {
     @PostMapping("/add")
     public String addCategory(@RequestBody Category category) {
         categoryService.addCategory(category);
-        log.info("category: {}", category.getName());
         return "redirect:/admin/home#about";
     }
 

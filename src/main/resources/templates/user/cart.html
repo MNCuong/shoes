@@ -287,7 +287,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="mb-0">Tổng giá trị:</h5>
                         <h5 class="text-success fw-bold mb-0">
-                            <span th:text="${cart.totalPrice} + ' VND'"></span>
+                            <span th:text="${cart.totalPrice} != null ? ${cart.totalPrice} + ' VND' : '0 VND'"></span>
                         </h5>
                     </div>
 
@@ -297,7 +297,7 @@
                                 class="btn btn-success btn-lg"
                                 data-bs-toggle="modal"
                                 data-bs-target="#shippingInfoModal">
-                            <i class="bi bi-credit-card-fill me-1"></i> Thanh toán
+                            <i class="bi bi-credit-card-fill me-1"></i> Đặt hàng
                         </button>
                     </div>
                 </div>
@@ -316,7 +316,7 @@
                         <div class="modal-body">
                             <form id="shipping-form">
                                 <div class="mb-3">
-                                    <label for="fullName" class="form-label">Họ tên</label>
+                                    <label for="fullName" class="form-label">Họ tên người nhận</label>
                                     <input type="text" class="form-control" id="fullName" required>
                                 </div>
                                 <div class="mb-3">
@@ -327,7 +327,11 @@
                                     <label for="phone" class="form-label">Số điện thoại</label>
                                     <input type="text" class="form-control" id="phone" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Xác nhận giao hàng</button>
+                                <div class="mb-3">
+                                    <label for="typePay" class="form-label">Phương thức thanh toán</label>
+                                    <input type="text" class="form-control" id="typePay" value="Thanh toán khi nhận hàng" readonly>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Xác nhận đặt hàng</button>
                             </form>
                         </div>
                     </div>
@@ -426,7 +430,7 @@
             </div>
 
         </div>
-        ff
+
 
         <div class="border-top copyright">
             <div class="row pt-4">

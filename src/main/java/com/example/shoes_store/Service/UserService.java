@@ -27,6 +27,7 @@ public interface UserService {
     User registerUser(User user);
 
     boolean userExists(String username);
+    boolean emailExists(String email);
 
     void updateUser(User updatedUser);
 

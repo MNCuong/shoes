@@ -158,7 +158,7 @@
     <nav id="navmenu" class="navmenu">
         <ul>
             <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
-            <li><a href="#about"><i class="bi bi-tags navicon"></i>Danh mục</a></li>
+            <li><a href="#about"><i class="bi bi-tags navicon"></i>Thương hiệu</a></li>
             <li><a href="#product"><i class="bi bi-file-earmark-text navicon"></i>Sản phẩm</a></li>
             <li><a href="#customers"><i class="bi bi-people navicon"></i> Khách hàng</a></li>
             <li><a href="#order"><i class="bi bi-bag-check-fill navicon"></i> Đơn hàng</a></li>
@@ -197,7 +197,7 @@
     <section id="about" class="about section">
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            <h2>Danh mục</h2>
+            <h2>Thương hiệu</h2>
         </div>
         <!-- End Section Title -->
         <div class="mb-3 container">
@@ -213,7 +213,7 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Tên danh mục</th>
+                            <th scope="col">Tên thương hiệu</th>
                             <th scope="col">Trạng thái</th>
                             <th scope="col">Khóa / mở</th>
                             <th scope="col">Thao tác</th>
@@ -259,12 +259,12 @@
                                     <div class="modal-content">
                                         <form class="editCategoryForm" th:attr="data-id=${cate.id}">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Sửa danh mục</h5>
+                                                <h5 class="modal-title">Sửa thương hiệu</h5>
                                                 <button type="button" class="btn-close"
                                                         data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <label>Tên danh mục:</label>
+                                                <label>Tên thương hiệu:</label>
                                                 <input type="text" class="form-control" name="name"
                                                        th:value="${cate.name}" required>
                                             </div>
@@ -288,7 +288,7 @@
                                                         data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Bạn có chắc chắn muốn xóa danh mục "<span
+                                                <p>Bạn có chắc chắn muốn xóa thương hiệu "<span
                                                         th:text="${cate.name}"></span>"?</p>
                                             </div>
                                             <div class="modal-footer">
@@ -315,12 +315,12 @@
                             <div class="modal-content">
                                 <form id="addCategoryForm">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="addModalLabel">Thêm danh mục</h5>
+                                        <h5 class="modal-title" id="addModalLabel">Thêm thương hiệu</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <label for="categoryName">Tên danh mục:</label>
+                                        <label for="categoryName">Tên thương hiệu:</label>
                                         <input type="text" class="form-control" id="categoryName" name="name" required>
                                     </div>
                                     <div class="modal-footer">
@@ -338,7 +338,7 @@
 
             </div>
             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal" style="width: auto">Thêm
-                danh mục
+                thương hiệu
             </button>
 
         </div>
@@ -446,28 +446,29 @@
                             <label for="productImageUrl" class="form-label">Ảnh sản phẩm</label>
                             <input type="text" class="form-control" id="productImageUrl" required name="imageUrl">
                         </div>
-                        <div class="mb-3">
-                            <label for="productBrand" class="form-label">Thương hiệu</label>
-                            <input type="text" class="form-control" id="productBrand" required name="brand">
-                        </div>
+<!--                        <div class="mb-3">-->
+<!--                            <label for="productBrand" class="form-label">Thương hiệu</label>-->
+<!--                            <input type="text" class="form-control" id="productBrand" required name="brand">-->
+<!--                        </div>-->
+
                         <div class="mb-3">
                             <label for="productPrice" class="form-label">Giá sản phẩm</label>
                             <input type="number" class="form-control" id="productPrice" name="price" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="productDiscount" class="form-label">Giảm giá</label>
-                            <input type="number" class="form-control" id="productDiscount" required name="discount">
-                        </div>
+<!--                        <div class="mb-3">-->
+<!--                            <label for="productDiscount" class="form-label">Giảm giá</label>-->
+<!--                            <input type="number" class="form-control" id="productDiscount" required name="discount">-->
+<!--                        </div>-->
                         <div class="mb-3">
                             <label for="productStock" class="form-label">Số lượng tồn kho</label>
                             <input type="number" class="form-control" id="productStock" required name="stockQuantity">
                         </div>
                         <div class="mb-3">
-                            <label for="productCategory" class="form-label">Danh mục sản phẩm</label>
+                            <label for="productCategory" class="form-label">Thương hiệu sản phẩm</label>
                             <select class="form-select" id="productCategory" name="category.id">
                                 <option th:each="categoryActive : ${categoriesActive}"
                                         th:value="${categoryActive.id}"
-                                        th:text="${categoryActive.name}">Danh mục
+                                        th:text="${categoryActive.name}">Thương hiệu
                                 </option>
                             </select>
 
@@ -524,38 +525,37 @@
                                  style="max-width: 100px; height: auto;padding-bottom: 15px;"
                                  ...>
 
-                            <input type="file" class="form-control" id="editProductImageUrl" required
+                            <input type="file" class="form-control" id="editProductImageUrl"
                                    name="productImage">
                         </div>
-                        <div class="mb-3">
-                            <label for="productBrand" class="form-label">Thương hiệu</label>
-                            <input type="text" class="form-control" readonly id="editProductBrand" required
-                                   name="brand">
-                        </div>
+<!--                        <div class="mb-3">-->
+<!--                            <label for="productBrand" class="form-label">Thương hiệu</label>-->
+<!--                            <input type="text" class="form-control" readonly id="editProductBrand" required-->
+<!--                                   name="brand">-->
+<!--                        </div>-->
+
                         <div class="mb-3">
                             <label for="productPrice" class="form-label">Giá sản phẩm</label>
                             <input type="number" class="form-control" id="editProductPrice" required name="price"
                             >
                         </div>
-                        <div class="mb-3">
-                            <label for="productDiscount" class="form-label">Giảm giá</label>
-                            <input type="number" class="form-control" id="editProductDiscount" required name="discount">
-                        </div>
+<!--                        <div class="mb-3">-->
+<!--                            <label for="productDiscount" class="form-label">Giảm giá</label>-->
+<!--                            <input type="number" class="form-control" id="editProductDiscount" required name="discount">-->
+<!--                        </div>-->
                         <div class="mb-3">
                             <label for="productStock" class="form-label">Số lượng tồn kho</label>
                             <input type="number" class="form-control" readonly id="editProductStock" required
                                    name="stockQuantity">
                         </div>
                         <div class="mb-3">
-                            <label for="productCategory" class="form-label">Danh mục sản phẩm</label>
-                            <select class="form-select" id="editProductCategory" name="category.id" readonly>
-                                <option th:each="categoryActive : ${categoriesActive}"
-                                        th:value="${categoryActive.id}"
-                                        th:text="${categoryActive.name}">
-                                    Danh mục
-                                </option>
+                            <label for="editProductCategory" class="form-label">Thương hiệu</label>
+                            <select class="form-select" id="editProductCategory" disabled>
                             </select>
+                            <input type="hidden" name="category.id" id="editProductCategoryHidden">
                         </div>
+
+
 
                         <!--                        <div class="mb-3">-->
                         <!--                            <label for="productStatus" class="form-label">Trạng thái</label>-->
@@ -708,6 +708,7 @@
                             <th>Giá tiền</th>
                             <th>Ngày đặt hàng</th>
                             <th>Trạng thái</th>
+                            <th>Trạng thái thanh toán</th>
                             <th>Thao tác</th>
 
                         </tr>
@@ -739,6 +740,12 @@
                                 <span th:case="'SHIPPING'">Đang giao hàng</span>
                                 <span th:case="'DELIVERED'">Đã giao hàng</span>
                                 <span th:case="'CANCEL'">Đã hủy</span>
+                                <span th:case="*">Không xác định</span>
+                            </td>
+                            <td th:switch="${order.paymentStatus}">
+                                <span th:case="'Wait for payment'">Chờ thanh toán</span>
+                                <span th:case="'Payment'">Đã thanh toán</span>
+                                <span th:case="'Cancel'">Đã hủy</span>
                                 <span th:case="*">Không xác định</span>
                             </td>
                             <td>
@@ -833,11 +840,25 @@
             <div class="container mb-4">
                 <form id="filterForm" class="row g-3">
                     <div class="col-auto">
+                        <select class="form-select" id="filterType" name="type">
+                            <option value="month" selected>Theo tháng</option>
+                            <option value="quarter">Theo quý</option>
+                        </select>
+                    </div>
+                    <div class="col-auto" id="monthGroup">
                         <select class="form-select" id="monthSelect" name="month">
                             <option th:each="i : ${#numbers.sequence(1,12)}"
                                     th:value="${i}"
                                     th:text="'Tháng ' + ${i}"
                                     th:selected="${i == currentMonth}"></option>
+                        </select>
+                    </div>
+                    <div class="col-auto d-none" id="quarterGroup">
+                        <select class="form-select" id="quarterSelect" name="quarter">
+                            <option value="1">Quý 1</option>
+                            <option value="2">Quý 2</option>
+                            <option value="3">Quý 3</option>
+                            <option value="4">Quý 4</option>
                         </select>
                     </div>
                     <div class="col-auto">
@@ -994,6 +1015,7 @@
 
 <!-- Main JS File -->
 <script src="../assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- Thêm các script JS của Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
@@ -1094,22 +1116,30 @@
                         if (!response.ok) {
                             throw new Error("Không tìm thấy sản phẩm!");
                         }
-                        console.log("Thanhcong");
 
                         return response.json();
                     })
                     .then(data => {
+                        console.log(data);
+                        const select = document.getElementById("editProductCategory");
+                        const hidden = document.getElementById("editProductCategoryHidden");
+
+                        select.innerHTML = "";
+
+                        const option = document.createElement("option");
+                        option.value = data.category.id;
+                        option.textContent = data.category.name;
+                        select.appendChild(option);
+                        hidden.value = data.category.id;
                         document.getElementById("editProductId").value = data.id;
                         document.getElementById("editProductName").value = data.name || "";
                         document.getElementById("editProductDescription").value = data.description || "";
                         document.getElementById("editProductFeatures").value = data.features || "";
                         document.getElementById("currentImagePreview").src = "/assets/img/products/" + data.imageUrl || "";
-                        document.getElementById("editProductBrand").value = data.brand || "";
                         document.getElementById("editProductPrice").value = data.price || 0;
-                        document.getElementById("editProductDiscount").value = data.discount || 0;
                         document.getElementById("editProductStock").value = data.stockQuantity || 0;
                         document.getElementById("editProductStatus").checked = data.active;
-                        document.getElementById("editProductCategory").value = data.category ? data.category.id : "";
+                        // document.getElementById("editProductCategory").value = data.category.id || 0;
 
                         console.log("id" + data.id);
 
@@ -1226,7 +1256,7 @@
                 if (res.ok) {
                     location.reload();
                 } else {
-                    alert("Thêm danh mục thất bại!");
+                    alert("Thêm Thương hiệu thất bại!");
                 }
             })
             .catch(error => {
@@ -1234,7 +1264,27 @@
             });
     });
 </script>
+<script>
+    document.getElementById("filterType").addEventListener("change", function () {
+        const type = this.value;
+        document.getElementById("monthGroup").classList.toggle("d-none", type === "quarter");
+        document.getElementById("quarterGroup").classList.toggle("d-none", type === "month");
+    });
 
+    document.getElementById("filterForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const type = document.getElementById("filterType").value;
+        const year = document.getElementById("yearSelect").value;
+
+        if (type === "month") {
+            const month = document.getElementById("monthSelect").value;
+            fetchRevenueByDay(month, year);
+        } else if (type === "quarter") {
+            const quarter = document.getElementById("quarterSelect").value;
+            fetchRevenueByQuarter(quarter, year);
+        }
+    });
+</script>
 <script>
     const ctx = document.getElementById('revenueChart').getContext('2d');
     let revenueChart;
@@ -1283,6 +1333,18 @@
         if (totalRevenueElement) {
             totalRevenueElement.innerText = `Tổng doanh thu tháng ${month}/${year}: ` + totalRevenue.toLocaleString() + ' VND';
         }
+    }
+
+    function fetchRevenueByQuarter(quarter, year) {
+        fetch(`/admin/orders/revenue-by-quarter?quarter=${quarter}&year=${year}`)
+            .then(response => response.json())
+            .then(data => {
+                const labels = Object.keys(data).map(month => `Tháng ${month}`);
+                const revenueData = Object.values(data).map(revenue => parseFloat(revenue));
+                const totalRevenue = revenueData.reduce((a, b) => a + b, 0);
+
+                drawChart(labels, revenueData, `Quý ${quarter}`, year, totalRevenue);
+            });
     }
 
     function fetchRevenueByDay(month, year) {
@@ -1372,6 +1434,7 @@
         });
     });
 </script>
+
 </body>
 
 </html>

@@ -19,7 +19,8 @@ public class Category {
 
     private String name;
     private boolean active;
-
+    private String description;
+    private Integer establishedYear;
     public Category() {
     }
 }

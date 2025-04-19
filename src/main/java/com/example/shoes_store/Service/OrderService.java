@@ -31,6 +31,5 @@ public interface OrderService {
     Map<String, String> getRevenueByDay(int month, int year);
 
     Boolean addOrder(OrderRequest request);
-
-
+    Map<Integer, BigDecimal> getRevenueByQuarter(int quarter, int year);
 }
