@@ -11,6 +11,17 @@
     <!-- Favicons -->
     <link href="../img/apple-icon.png" rel="icon">
     <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+    <!-- Thêm Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Thêm jQuery (cần cho Bootstrap 4) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Thêm Popper.js (cần cho Bootstrap 4) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+
+    <!-- Thêm Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -46,6 +57,82 @@
         table {
             border: 2px solid #000;
             border-collapse: collapse;
+        }
+
+        .modal-body-customer {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .order-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .order-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-item span {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #ddd;
+        }
+        .status {
+            font-weight: bold;
+            display: inline;
+            padding: 2px 6px;
+            border-radius: 5px;
+        }
+
+        .status.pending {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .status.confirmed {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .status.processing {
+            background-color: #17a2b8;
+            color: #fff;
+        }
+
+        .status.shipping {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .status.delivered {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .status.cancel {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .status.unknown {
+            background-color: #6c757d;
+            color: #fff;
         }
 
     </style>
@@ -538,12 +625,53 @@
                             <td th:text="${user.email}"></td>
                             <td th:text="${user.role}"></td>
                             <td>
-                                Số đơn: <span th:text="${#lists.size(user.orders)}"></span>
-                                <ul>
-                                    <li th:each="order : ${user.orders}">
-                                        <span th:text="'Mã đơn: ' + ${order.id} + ' - Trạng thái: ' + ${order.status}"></span>
-                                    </li>
-                                </ul>
+                                <button type="button" class="btn btn-info" data-toggle="modal"
+                                        th:data-target="'#orderModal' + ${user.id}">
+                                    Số đơn: <span th:text="${#lists.size(user.orders)}"></span>
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" th:id="'orderModal' + ${user.id}" tabindex="-1" role="dialog"
+                                     aria-labelledby="orderModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="orderModalLabel">Danh sách đơn hàng</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body-customer">
+                                                <ul class="order-list">
+                                                    <li th:if="${#lists.size(user.orders) == 0}" class="order-item">
+                                                        <span>Chưa có đơn hàng dược tạo</span>
+                                                    </li>
+                                                    <li th:each="order : ${user.orders}" class="order-item">
+                                                        <span th:text="'Mã đơn: ' + ${order.code}"></span><br>
+                                                        <strong><em>
+                                                            Trạng thái:
+                                                            <span th:switch="${order.status}">
+        <span th:case="'PENDING'" class="status pending">Chờ xác nhận</span>
+        <span th:case="'CONFIRMED'" class="status confirmed">Đã xác nhận</span>
+        <span th:case="'PROCESSING'" class="status processing">Đang chuẩn bị hàng</span>
+        <span th:case="'SHIPPING'" class="status shipping">Đang giao hàng</span>
+        <span th:case="'DELIVERED'" class="status delivered">Đã giao hàng</span>
+        <span th:case="'CANCEL'" class="status cancel">Đã hủy</span>
+        <span th:case="*" class="status unknown">Không xác định</span>
+    </span>
+                                                        </em></strong>
+                                                        <hr>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Đóng
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
@@ -560,10 +688,10 @@
         <div class="container section-title" data-aos="fade-up">
             <h2>Đơn hàng</h2>
         </div>
-        <div class="mb-3 container">
-            <input type="text" id="orderSearch" class="form-control" style="width: 44%;"
-                   placeholder="Nhập từ khóa tìm kiếm(Mã đơn,khách hàng, trạng thái) ...">
-        </div>
+        <!--        <div class="mb-3 container">-->
+        <!--            <input type="text" id="orderSearch" class="form-control" style="width: 44%;"-->
+        <!--                   placeholder="Nhập từ khóa tìm kiếm(Mã đơn,khách hàng, trạng thái) ...">-->
+        <!--        </div>-->
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="row gy-4 justify-content-center">
                 <div class="col-lg-12 content table-container">
@@ -1202,50 +1330,6 @@
 <!--                    row.style.display = "none";-->
 <!--                }-->
 <!--            });-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const searchInput = document.getElementById("orderSearch");
-        const table = document.getElementById("orderTable");
-        const rows = table.querySelectorAll("tbody > tr");
-
-        searchInput.addEventListener("keyup", function () {
-            const filter = this.value.toLowerCase();
-
-            rows.forEach(function (row) {
-                let rowText = row.innerText.toLowerCase();
-               const subTable = row.querySelector("td[colspan] .sub-table");
-                if (subTable) {
-                    rowText += " " + subTable.innerText.toLowerCase();
-                }
-                if (filter === "" || rowText.includes(filter)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        });
-    });
-</script>
-
-<!--<script>-->
-<!--    document.getElementById("orderSearch").addEventListener("keyup", function () {-->
-<!--        const filter = this.value.toLowerCase();-->
-<!--        const rows = document.querySelectorAll("#orderTable tbody > tr");-->
-
-<!--        rows.forEach(function (row) {-->
-<!--            const cells = row.querySelectorAll("td, th");-->
-<!--            let textContent = "";-->
-
-<!--            cells.forEach((cell, index) => {-->
-<!--                if (index === 0) return;-->
-<!--                textContent += cell.innerText.toLowerCase() + " ";-->
-<!--            });-->
-
-<!--            const match = textContent.includes(filter);-->
-<!--            row.style.display = match ? "" : "none";-->
 <!--        });-->
 <!--    });-->
 <!--</script>-->
