@@ -42,10 +42,11 @@
             max-height: 600px;
             overflow-y: auto;
         }
-         table {
-             border: 2px solid #000;
-             border-collapse: collapse;
-         }
+
+        table {
+            border: 2px solid #000;
+            border-collapse: collapse;
+        }
 
     </style>
 
@@ -69,7 +70,7 @@
 
     <nav id="navmenu" class="navmenu">
         <ul>
-            <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Dashboard</a></li>
+            <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
             <li><a href="#about"><i class="bi bi-tags navicon"></i>Danh mục</a></li>
             <li><a href="#product"><i class="bi bi-file-earmark-text navicon"></i>Sản phẩm</a></li>
             <li><a href="#customers"><i class="bi bi-people navicon"></i> Khách hàng</a></li>
@@ -112,13 +113,16 @@
             <h2>Danh mục</h2>
         </div>
         <!-- End Section Title -->
-
+        <div class="mb-3 container">
+            <input type="text" id="categorySearch" class="form-control" style="width: 44%;"
+                   placeholder="Nhập từ khóa tìm kiếm ...">
+        </div>
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="row gy-4 justify-content-center">
                 <div class="col-lg-12 content table-container">
 
                     <!-- Table -->
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="categoryTable">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -130,8 +134,8 @@
                         </thead>
 
                         <tbody>
-                        <tr th:each="cate : ${categories}">
-                            <th scope="row" th:text="${cate.id}"></th>
+                        <tr th:each="cate, iterStat : ${categories}">
+                            <th scope="row" th:text="${iterStat.index + 1}"></th>
                             <td th:text="${cate.name}"></td>
                             <td>
                                 <span th:text="${cate.active ? 'Đang hoạt động' :  'Ngừng hoạt động'}"></span>
@@ -246,7 +250,9 @@
                 </div>
 
             </div>
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal" style="width: auto">Thêm danh mục</button>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal" style="width: auto">Thêm
+                danh mục
+            </button>
 
         </div>
 
@@ -257,11 +263,15 @@
         <div class="container section-title" data-aos="fade-up">
             <h2>Sản phẩm</h2>
         </div>
+        <div class="mb-3 container">
+            <input type="text" id="productSearch" class="form-control" style="width: 44%;"
+                   placeholder="Nhập từ khóa tìm kiếm...">
+        </div>
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="row gy-4 justify-content-center">
                 <div class="col-lg-12 content table-container">
                     <!-- Table -->
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="productTable">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -275,8 +285,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="product : ${products}">
-                            <th scope="row" th:text="${product.id}"></th>
+                        <tr th:each="product, iterStat : ${products}">
+                            <th scope="row" th:text="${iterStat.index + 1}"></th>
+
+                            <!--                            <th scope="row" th:text="${product.id}"></th>-->
                             <td th:text="${product.name}"></td>
                             <td>
                                 <img th:src="@{'/assets/img/products/' + ${product.imageUrl}}" alt="Image"
@@ -308,7 +320,8 @@
 
                 </div>
             </div>
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal" style="margin-top: 20px">Thêm sản
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal"
+                    style="margin-top: 20px">Thêm sản
                 phẩm
             </button>
         </div>
@@ -518,9 +531,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!-- Lặp qua danh sách khách hàng -->
-                        <tr th:each="user : ${users}">
-                            <th scope="row" th:text="${user.id}"></th>
+                        <tr th:each="user, iterStat : ${users}">
+                            <th scope="row" th:text="${iterStat.index + 1}"></th>
                             <td th:text="${user.username}"></td>
                             <td th:text="${user.fullname}"></td>
                             <td th:text="${user.email}"></td>
@@ -548,31 +560,37 @@
         <div class="container section-title" data-aos="fade-up">
             <h2>Đơn hàng</h2>
         </div>
-
+        <div class="mb-3 container">
+            <input type="text" id="orderSearch" class="form-control" style="width: 44%;"
+                   placeholder="Nhập từ khóa tìm kiếm(Mã đơn,khách hàng, trạng thái) ...">
+        </div>
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="row gy-4 justify-content-center">
                 <div class="col-lg-12 content table-container">
                     <!-- Table -->
 
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="orderTable">
                         <thead>
                         <tr>
                             <th>#</th>
+                            <th>Mã đơn hàng</th>
                             <th>Khách hàng</th>
                             <th>Tên sản phẩm</th>
                             <th>Số lượng</th>
                             <th>Giá tiền</th>
+                            <th>Ngày đặt hàng</th>
                             <th>Trạng thái</th>
                             <th>Thao tác</th>
 
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="order : ${orders}">
-                            <td th:text="${order.id}"></td>
+                        <tr th:each="order, iterStat : ${orders}">
+                            <th scope="row" th:text="${iterStat.index + 1}"></th>
+                            <td th:text="${order.code}"></td>
                             <td th:text="${order.user.fullname}"></td>
                             <td colspan="3">
-                                <table class="table">
+                                <table class="table sub-table">
                                     <tbody>
                                     <tr th:each="item : ${order.orderItems}"
                                         style="cursor: pointer;"
@@ -585,6 +603,7 @@
                                     </tbody>
                                 </table>
                             </td>
+                            <td th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}"></td>
                             <td th:switch="${order.status}">
                                 <span th:case="'PENDING'">Chờ xác nhận</span>
                                 <span th:case="'CONFIRMED'">Đã xác nhận</span>
@@ -615,12 +634,10 @@
                                             class="btn btn-secondary" disabled>Hoàn tất
                                     </button>
 
-                                    <!-- Hủy -->
                                     <button type="button" th:if="${order.status == 'CANCEL'}" class="btn btn-secondary"
                                             disabled>Đã hủy đơn
                                     </button>
 
-                                    <!-- Nút hủy đơn -->
                                     <button type="submit"
                                             th:if="${order.status != 'DELIVERED' and order.status != 'CANCEL'}"
                                             name="status" value="CANCEL"
@@ -642,6 +659,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
+                                        <p><strong>Mã đơn hàng:</strong> <span th:text="${order.code}"></span></p>
                                         <p><strong>Người nhận:</strong> <span th:text="${order.fullName}"></span></p>
                                         <p><strong>SĐT:</strong> <span th:text="${order.phone}"></span></p>
                                         <p><strong>Địa chỉ:</strong> <span th:text="${order.address}"></span></p>
@@ -1162,8 +1180,114 @@
         fetchRevenueByDay(month, year);
     });
 </script>
+<!--<script>-->
+<!--    document.addEventListener("DOMContentLoaded", function () {-->
+<!--        const searchInput = document.getElementById("orderSearch");-->
+<!--        const table = document.getElementById("orderTable");-->
+<!--        const rows = table.querySelectorAll("tbody > tr");-->
 
+<!--        searchInput.addEventListener("keyup", function () {-->
+<!--            const filter = this.value.toLowerCase();-->
 
+<!--            rows.forEach(function (row) {-->
+<!--                let rowText = row.innerText.toLowerCase();-->
+
+<!--                if (filter === "" || rowText.includes(filter)) {-->
+<!--                    row.style.display = "";-->
+<!--                    const subTable = row.querySelector(".table");-->
+<!--                    if (subTable) {-->
+<!--                        subTable.style.display = "";-->
+<!--                    }-->
+<!--                } else {-->
+<!--                    row.style.display = "none";-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("orderSearch");
+        const table = document.getElementById("orderTable");
+        const rows = table.querySelectorAll("tbody > tr");
+
+        searchInput.addEventListener("keyup", function () {
+            const filter = this.value.toLowerCase();
+
+            rows.forEach(function (row) {
+                let rowText = row.innerText.toLowerCase();
+               const subTable = row.querySelector("td[colspan] .sub-table");
+                if (subTable) {
+                    rowText += " " + subTable.innerText.toLowerCase();
+                }
+                if (filter === "" || rowText.includes(filter)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
+<!--<script>-->
+<!--    document.getElementById("orderSearch").addEventListener("keyup", function () {-->
+<!--        const filter = this.value.toLowerCase();-->
+<!--        const rows = document.querySelectorAll("#orderTable tbody > tr");-->
+
+<!--        rows.forEach(function (row) {-->
+<!--            const cells = row.querySelectorAll("td, th");-->
+<!--            let textContent = "";-->
+
+<!--            cells.forEach((cell, index) => {-->
+<!--                if (index === 0) return;-->
+<!--                textContent += cell.innerText.toLowerCase() + " ";-->
+<!--            });-->
+
+<!--            const match = textContent.includes(filter);-->
+<!--            row.style.display = match ? "" : "none";-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+<script>
+    document.getElementById("productSearch").addEventListener("keyup", function () {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll("#productTable tbody > tr");
+
+        rows.forEach(function (row) {
+            const cells = row.querySelectorAll("td, th");
+            let textContent = "";
+
+            cells.forEach((cell, index) => {
+                if (index === 0) return;
+                textContent += cell.innerText.toLowerCase() + " ";
+            });
+
+            const match = textContent.includes(filter);
+            row.style.display = match ? "" : "none";
+        });
+    });
+</script>
+<script>
+    document.getElementById("categorySearch").addEventListener("keyup", function () {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll("#categoryTable tbody tr");
+
+        rows.forEach(function (row) {
+            const customerName = row.querySelector("td:nth-child(2)")?.textContent.toLowerCase() || "";
+            const productNames = Array.from(row.querySelectorAll("td[colspan='3'] td:first-child"))
+                .map(td => td.textContent.toLowerCase())
+                .join(" ");
+
+            if (customerName.includes(filter) || productNames.includes(filter)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

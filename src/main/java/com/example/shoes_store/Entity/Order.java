@@ -32,6 +32,7 @@ public class Order {
     private String fullName;
     private LocalDateTime orderDate;
     private BigDecimal totalPrice;
+    private String code;
 
     public Order() {
 

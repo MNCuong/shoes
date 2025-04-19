@@ -50,7 +50,7 @@ public class AuthController {
         return "redirect:login";
     }
 
-    @GetMapping("/home")
+    @GetMapping({"/", "/home"})
     public String homePage(HttpSession session, Model model) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         model.addAttribute("user", loggedInUser);

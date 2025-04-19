@@ -31,6 +31,22 @@
             width: 100%;
         }
     </style>
+    <style>
+        #category-list .category-link {
+            transition: all 0.3s ease;
+            padding: 12px 12px;
+            border-radius: 5px;
+            display: block;
+        }
+
+        #category-list .category-link:hover {
+            background-color: #f0f0f0;
+            color: #007bff;
+            font-weight: 500;
+            text-decoration: none;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -64,7 +80,7 @@
 <nav class="navbar navbar-expand-lg navbar-light shadow">
     <div class="container d-flex justify-content-between align-items-center">
 
-        <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
+        <a class="navbar-brand text-success logo h1 align-self-center" th:href="@{/home}">
             Shoes
         </a>
 
@@ -532,14 +548,16 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="card-body">
-                            <a href="/product/${product.id}" class="h3 text-decoration-none">${product.name}</a>
+                       <div class="card-body">
+                            <a href="/product/${product.id}" class="h5 text-decoration-none text-center d-block">${product.name}</a>
+
                             <ul class="list-unstyled d-flex justify-content-center mb-1">
                                 ${'<li><i class="text-warning fa fa-star"></i></li>'.repeat(5)}
                             </ul>
 
                             <p class="text-center mb-0">${formatCurrency(product.price)}</p>
                         </div>
+
                     </div>
                 </div>
             `;

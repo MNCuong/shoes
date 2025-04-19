@@ -138,7 +138,8 @@ public class OrderServiceImpl implements OrderService {
                 orderItemRepo.save(orderItem);
                 items.add(orderItem);
             }
-
+            String orderCode = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+            order.setCode(orderCode);
             order.setOrderItems(items);
 //            BigDecimal total = items.stream()
 //                    .map(OrderItem::getPrice)
